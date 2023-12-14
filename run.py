@@ -7,17 +7,25 @@ from sys import stdout
 from colorama import Fore, init
 from rich.panel import Panel as Panel
 from rich.console import Console
-
+console = Console()
+#------------[ INDICATION ]---------------#
+M2 = "[#FF0000]" # MERAH
+H2 = "[#00FF00]" # HIJAU
+K2 = "[#FFFF00]" # KUNING
+B2 = "[#00C8FF]" # BIRU
+P2 = "[#FFFFFF]" # PUTIH
+U2 = "[#AF00FF]" # UNGU
+O2 = "[#FF8F00]" # ORANGE
 
 def title():
-    Console().print(Panel("""
-[bold red]███████████████████████    
-[bold red]███████████████████████ [bold yellow]Github : [bold green]Rudal-XD
-[bold red]███████████████████████ [bold yellow]Wa     : [bold green]+62895386194***
-[bold white]███████████████████████          
-[bold white]███████████████████████          
-[bold white]███████████████████████ 
-[bold white]""",width=60,style=f"bold cyan"))
+    Console().print(Panel(f"""
+{M2}███████████████████████    
+{M2}███████████████████████ {K2}Github : {H2}Rudal-XD
+{M2}███████████████████████ {K2}Wa     : {H2}+62895386194***
+{P2}███████████████████████          
+{P2}███████████████████████          
+{P2}███████████████████████ 
+{P2}""",subtitle=f'{H2}Script DDoS SKY',width=60,style=f"{B2}"))
 
 def clear(): 
     if name == 'nt': 
@@ -27,10 +35,10 @@ def clear():
 
             
 def command():
-    
-    target = input(" • URL : ")
-    thread = input(" • THREAD : ")
-    t = input(" • TIME : ")
+
+    target = console.input(f" {H2}• {P2}URL :{H2} ")
+    thread = console.input(f" {H2}• {P2}THREAD :{H2} ")
+    t = console.input(f" {H2}• {P2}TIME :{H2} ")
     threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
     timer = threading.Thread(target=countdown, args=(t,))
     timer.start()
