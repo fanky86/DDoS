@@ -25,7 +25,7 @@ def title():
 {P2}███████████████████████          
 {P2}███████████████████████          
 {P2}███████████████████████ 
-{P2}""",subtitle=f'{H2}Script DDoS SKY',width=60,style=f"{B2}"))
+{P2}""",subtitle=f'{H2}Script DDoS SKY',width=60))
 
 def clear(): 
     if name == 'nt': 
