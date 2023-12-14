@@ -7,6 +7,7 @@ from sys import stdout
 from colorama import Fore, init
 from rich.panel import Panel as Panel
 from rich.console import Console
+from bs4 import BeautifulSoup as beautifulsoup
 console = Console()
 #------------[ INDICATION ]---------------#
 M2 = "[#FF0000]" # MERAH
@@ -18,8 +19,15 @@ U2 = "[#AF00FF]" # UNGU
 O2 = "[#FF8F00]" # ORANGE
 
 def title():
-    Console().print(Panel("%s███████████████████████\n%s███████████████████████ %sGithub : %sRudal-XD\n%s███████████████████████ %sWa     : %s+62895386194***\n%s███████████████████████          \n%s███████████████████████          \n%s███████████████████████ \n%s"%(M2,M2,K2,H2,M2,K2,H2,P2,P2,P2),subtitle=f'Script DDoS SKY',width=60))
-
+    Console().print(Panel("""
+[bold red]███████████████████████    
+[bold red]███████████████████████ [bold yellow]Github : [bold green]
+[bold red]███████████████████████ [bold yellow]Wa     : [bold green]+62895386194***
+[bold white]███████████████████████          
+[bold white]███████████████████████          
+[bold white]███████████████████████ 
+[bold white]""",width=60,style=f"{color_panel}"))
+    
 def clear(): 
     if name == 'nt': 
         system('cls')
