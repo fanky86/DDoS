@@ -26,7 +26,7 @@ def title():
 [bold white]███████████████████████          
 [bold white]███████████████████████          
 [bold white]███████████████████████ 
-[bold white]""",width=60,style=f"{color_panel}"))
+[bold white]""",width=60,style=f"bold cyan"))
     
 def clear(): 
     if name == 'nt': 
