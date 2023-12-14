@@ -37,9 +37,9 @@ def clear():
             
 def command():
 
-    target = console.input(f" %s• %SURL :%s "%(H2,K2,H2))
-    thread = console.input(f" %s• %STHREAD :%s "%(H2,K2,H2))
-    t = console.input(f" %s• %STIME :%s "%(H2,K2,H2))
+    target = console.input(f' %s• %SURL :%s '%(H2,K2,H2))
+    thread = console.input(f' %s• %STHREAD :%s '%(H2,K2,H2))
+    t = console.input(f' %s• %STIME :%s '%(H2,K2,H2))
     threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
     timer = threading.Thread(target=countdown, args=(t,))
     timer.start()
