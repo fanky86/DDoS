@@ -18,14 +18,7 @@ U2 = "[#AF00FF]" # UNGU
 O2 = "[#FF8F00]" # ORANGE
 
 def title():
-    Console().print(Panel(f"""
-%s███████████████████████
-%s███████████████████████ %sGithub : %sRudal-XD
-%s███████████████████████ %sWa     : %s+62895386194***
-%s███████████████████████          
-%s███████████████████████          
-%s███████████████████████ 
-%s"""%(M2,M2,K2,H2,M2,K2,H2,P2,P2,P2),subtitle=f'Script DDoS SKY',width=60))
+    Console().print(Panel("%s███████████████████████\n%s███████████████████████ %sGithub : %sRudal-XD\n%s███████████████████████ %sWa     : %s+62895386194***\n%s███████████████████████          \n%s███████████████████████          \n%s███████████████████████ \n%s"%(M2,M2,K2,H2,M2,K2,H2,P2,P2,P2),subtitle=f'Script DDoS SKY',width=60))
 
 def clear(): 
     if name == 'nt': 
