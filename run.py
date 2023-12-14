@@ -19,13 +19,13 @@ O2 = "[#FF8F00]" # ORANGE
 
 def title():
     Console().print(Panel(f"""
-{M2}███████████████████████    
-{M2}███████████████████████ {K2}Github : {H2}Rudal-XD
-{M2}███████████████████████ {K2}Wa     : {H2}+62895386194***
-{P2}███████████████████████          
-{P2}███████████████████████          
-{P2}███████████████████████ 
-{P2}""",subtitle=f'{H2}Script DDoS SKY',width=60))
+%s███████████████████████
+%s███████████████████████ %sGithub : %sRudal-XD
+%s███████████████████████ %sWa     : %s+62895386194***
+%s███████████████████████          
+%s███████████████████████          
+%s███████████████████████ 
+%s"""%(M2,M2,K2,H2,M2,K2,H2,P2,P2,P2),subtitle=f'Script DDoS SKY',width=60))
 
 def clear(): 
     if name == 'nt': 
@@ -36,9 +36,9 @@ def clear():
             
 def command():
 
-    target = console.input(f" {H2}• {P2}URL :{H2} ")
-    thread = console.input(f" {H2}• {P2}THREAD :{H2} ")
-    t = console.input(f" {H2}• {P2}TIME :{H2} ")
+    target = console.input(f" %s• %SURL :%s "%(H2,K2,H2))
+    thread = console.input(f" %s• %STHREAD :%s "%(H2,K2,H2))
+    t = console.input(f" %s• %STIME :%s "%(H2,K2,H2))
     threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
     timer = threading.Thread(target=countdown, args=(t,))
     timer.start()
