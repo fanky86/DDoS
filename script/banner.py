@@ -13,7 +13,7 @@ O2 = "[#FF8F00]" # ORANGE
 
 def title():
   Console().print(Panel("""
-  "+Fore.WHITE+"███████████████████████    
+  [bold red]███████████████████████    
   [bold red]███████████████████████ [bold yellow]Github : [bold green]
   [bold red]███████████████████████ [bold yellow]Wa     : [bold green]+628953596111**
   [bold white]███████████████████████          
