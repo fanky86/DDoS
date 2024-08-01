@@ -8,6 +8,8 @@ from colorama import Fore, init
 from rich.panel import Panel as Panel
 from rich.console import Console
 from bs4 import BeautifulSoup as beautifulsoup
+from script.banner import title
+banner = title
 console = Console()
 #------------[ INDICATION ]---------------#
 M2 = "[#FF0000]" # MERAH
@@ -18,15 +20,6 @@ P2 = "[#FFFFFF]" # PUTIH
 U2 = "[#AF00FF]" # UNGU
 O2 = "[#FF8F00]" # ORANGE
 
-def title():
-    Console().print(Panel("""
-[bold red]███████████████████████    
-[bold red]███████████████████████ [bold yellow]Github : [bold green]
-[bold red]███████████████████████ [bold yellow]Wa     : [bold green]+62895386194***
-[bold white]███████████████████████          
-[bold white]███████████████████████          
-[bold white]███████████████████████ 
-[bold white]""",width=60,style=f"bold cyan"))
     
 def clear(): 
     if name == 'nt': 
@@ -93,7 +86,7 @@ if __name__ == '__main__':
     if len(sys.argv) < 2:
         ua = open('ua.txt', 'r').read().split('\n')
         clear()
-        title()
+        banner()
         while True:
             command()
     elif len(sys.argv) == 5:
