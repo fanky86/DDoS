@@ -1,4 +1,5 @@
 from rich.console import Console
+from rich.panel import Panel as Panel
 #------------[ INDICATION ]---------------#
 M2 = "[#FF0000]" # MERAH
 H2 = "[#00FF00]" # HIJAU
