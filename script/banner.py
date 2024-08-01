@@ -1,5 +1,6 @@
 from rich.console import Console
 from rich.panel import Panel as Panel
+from colorama import Fore, init
 #------------[ INDICATION ]---------------#
 M2 = "[#FF0000]" # MERAH
 H2 = "[#00FF00]" # HIJAU
@@ -12,7 +13,7 @@ O2 = "[#FF8F00]" # ORANGE
 
 def title():
   Console().print(Panel("""
-  [bold red]███████████████████████    
+  "+Fore.WHITE+"███████████████████████    
   [bold red]███████████████████████ [bold yellow]Github : [bold green]
   [bold red]███████████████████████ [bold yellow]Wa     : [bold green]+628953596111**
   [bold white]███████████████████████          
