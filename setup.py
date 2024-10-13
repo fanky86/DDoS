@@ -1,33 +1,47 @@
 import os
 
-print("""
+# Fungsi untuk menampilkan teks berwarna
+def print_banner():
+    print("""
 \x1b[38;2;255;20;147m╦╔═ ╔═╗ ╦═╗ ╔╦╗ ╔═╗
 \x1b[38;2;255;20;147m╠╩╗ ╠═╣ ╠╦╝ ║║║ ╠═╣
 \x1b[38;2;255;20;147m╩ ╩ ╩ ╩ ╩╚═ ╩ ╩ ╩ ╩\x1b[38;2;0;255;58m>(setup)
-""") 
+""")
 
-print("""[0] pip\n[1] pip3\nWhich one do you use?""")
+# Fungsi untuk menginstal paket-paket dengan pip atau pip3
+def install_packages(pip_command):
+    packages = [
+        "cloudscraper", 
+        "socks", 
+        "pysocks", 
+        "colorama", 
+        "undetected_chromedriver", 
+        "httpx"
+    ]
+    
+    for package in packages:
+        os.system(f"{pip_command} install {package}")
 
-c = input(">>>: ")
+# Script utama
+print_banner()
+
+print("""[0] pip\n[1] pip3\nPilih yang mana yang kamu gunakan?""")
+c = input(">>>: ").strip()
+
 if c == "0":
-    os.system("pip install cloudscraper")
-    os.system("pip install socks")
-    os.system("pip install pysocks")
-    os.system("pip install colorama")
-    os.system("pip install undetected_chromedriver")
-    os.system("pip install httpx")
-
+    pip_command = "pip"
 elif c == "1":
-    os.system("pip3 install cloudscraper")
-    os.system("pip3 install socks")
-    os.system("pip3 install pysocks")
-    os.system("pip3 install colorama")
-    os.system("pip3 install undetected_chromedriver")
-    os.system("pip3 install httpx")
-if os.name == "nt":
-    pass
+    pip_command = "pip3"
 else:
-    os.system("wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
-    os.system("apt-get install ./google-chrome-stable_current_amd64.deb")
+    print("Pilihan tidak valid.")
+    exit()
 
-print("Done.")
+# Instalasi paket
+install_packages(pip_command)
+
+# Jika sistem adalah Linux, unduh dan instal Google Chrome
+if os.name != "nt":
+    os.system("wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb")
+    os.system("apt-get install -y ./google-chrome-stable_current_amd64.deb")
+
+print("Proses setup selesai.")
