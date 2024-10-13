@@ -1,7 +1,7 @@
 import os
 
 # Fungsi untuk menampilkan banner keren bergaya hacktivisme
-def print_banner():
+def title():
     print("""
 \x1b[38;2;0;255;0m╔═╗╔═╗╦  ╔═╗╦╔╦╗╦╔═╗╔╗╔
 \x1b[38;2;0;255;0m╚═╗╠═╣║  ║ ║║ ║ ║║ ║║║║
@@ -27,7 +27,7 @@ def install_packages(pip_command):
         os.system(f"{pip_command} install {package}")
 
 # Script utama
-print_banner()
+title()
 
 print("""[0] pip\n[1] pip3\nPilih yang mana yang kamu gunakan?""")
 c = input(">>>: ").strip()
