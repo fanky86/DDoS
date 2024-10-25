@@ -11,6 +11,7 @@ from urllib.parse import urlparse
 from sys import stdout
 from rich.console import Console
 from rich.panel import Panel
+from colorama import init  # Tambahkan ini untuk colorama
 
 # Daftar modul yang diperlukan
 required_modules = [
@@ -154,7 +155,7 @@ def countdown(t):
 
 # Entry point
 if __name__ == '__main__':
-    init(convert=True)
+    init(convert=True)  # Menggunakan colorama untuk konversi warna di terminal
     clear()
     console.print(Panel("[bold cyan]Selamat Datang di STELLAR Attack Script[/bold cyan]", style="bold cyan"))
     while True:
