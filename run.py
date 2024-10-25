@@ -1,15 +1,41 @@
 import os
+import subprocess
+import sys
+
+# Daftar modul yang diperlukan
+required_modules = [
+    "requests",
+    "cloudscraper",
+    "httpx",
+    "colorama",
+    "rich",
+    "beautifulsoup4",
+    "undetected_chromedriver"
+]
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+def check_and_install_modules():
+    for module in required_modules:
+        try:
+            __import__(module)
+        except ImportError:
+            print(f"Modul '{module}' tidak ditemukan. Menginstal...")
+            install(module)
+
+# Panggil fungsi untuk memeriksa dan menginstal modul
+check_and_install_modules()
+
+# Import modul setelah memastikan semua modul terinstal
 import threading
 import requests
-import sys
 import cloudscraper
 import datetime
 import time
 import socket
-import socks
 import ssl
 import random
-import httpx
 from urllib.parse import urlparse
 from requests.cookies import RequestsCookieJar
 import undetected_chromedriver as webdriver
