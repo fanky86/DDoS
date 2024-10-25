@@ -1,16 +1,25 @@
 import os
 import subprocess
 import sys
+import threading
+import requests
+import datetime
+import time
+import socket
+import ssl
+import random
+from urllib.parse import urlparse
+from sys import stdout
+from colorama import Fore, init
+from rich.console import Console
+from bs4 import BeautifulSoup as beautifulsoup
 
 # Daftar modul yang diperlukan
 required_modules = [
     "requests",
-    "cloudscraper",
-    "httpx",
     "colorama",
     "rich",
-    "beautifulsoup4",
-    "undetected_chromedriver"
+    "beautifulsoup4"
 ]
 
 def install(package):
@@ -27,37 +36,13 @@ def check_and_install_modules():
 # Panggil fungsi untuk memeriksa dan menginstal modul
 check_and_install_modules()
 
-# Import modul setelah memastikan semua modul terinstal
-import threading
-import requests
-import cloudscraper
-import datetime
-import time
-import socket
-import ssl
-import random
-from urllib.parse import urlparse
-from requests.cookies import RequestsCookieJar
-import undetected_chromedriver as webdriver
-from sys import stdout
-from colorama import Fore, init
-from rich.panel import Panel
-from rich.console import Console
-from bs4 import BeautifulSoup as beautifulsoup
-from script.banner import title
-
 # Banner and console setup
-banner = title
 console = Console()
 
 # Colors
 M2 = "[#FF0000]"  # MERAH
 H2 = "[#00FF00]"  # HIJAU
 K2 = "[#FFFF00]"  # KUNING
-B2 = "[#00C8FF]"  # BIRU
-P2 = "[#FFFFFF]"  # PUTIH
-U2 = "[#AF00FF]"  # UNGU
-O2 = "[#FF8F00]"  # ORANGE
 
 # Clear console
 def clear():
@@ -136,11 +121,10 @@ def countdown(t):
 # Entry point
 if __name__ == '__main__':
     init(convert=True)
-    if len(sys.argv) < 2:
-        ua = open('ua.txt', 'r').read().splitlines()
-        clear()
-        banner()
-        while True:
-            command()
-    elif len(sys.argv) == 5:
-        pass
+    ua = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3",
+          "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko",
+          "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8"]
+    
+    clear()
+    while True:
+        command()
