@@ -62,7 +62,7 @@ def install_packages(pip_command):
 print_banner()
 
 Console().print(Panel(f"{H2}1. {P2}pip\n{H2}2. {P2}pip3",width=60,title="PILIH INSTALASI",style=f"{color_panel}"))
-c = Console().input(f"{H2}• {P2}: ").strip()
+c = Console().input(f"{H2}• {P2} ").strip()
 
 if c == "1":
     pip_command = "pip"
