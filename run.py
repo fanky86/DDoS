@@ -1,4 +1,4 @@
-import os
+import os,rich
 import subprocess
 import sys
 import threading
@@ -12,13 +12,55 @@ from sys import stdout
 from rich.console import Console
 from rich.panel import Panel
 from colorama import init  # Tambahkan ini untuk colorama
-
+from rich.panel import Panel
+# ------------[ INDICATION ]---------------#
+M2 = "[#FF0000]"  # MERAH
+H2 = "[#00FF00]"  # HIJAU
+K2 = "[#FFFF00]"  # KUNING
+B2 = "[#00C8FF]"  # BIRU
+P2 = "[#FFFFFF]"  # PUTIH
+U2 = "[#AF00FF]"  # UNGU
+O2 = "[#FF8F00]"  # ORANGE
+try:
+    file_color = open("data/theme_color", "r").read()
+    color_text = file_color.split("|")[0]
+    color_panel = file_color.split("|")[1]
+except:
+    color_text = "[#00FF00]"
+    W1 = random.choice([M2, H2, K2])
+    W2 = random.choice([K2, M2, K2])
+    W3 = random.choice([H2, K2, M2])
+    color_panel = "#00FF00"
+    color_ok = "#00FF00"
+    color_cp = "#FFFF00"
+try:
+    color_table = open("data/theme_color", "r").read()
+except FileNotFoundError:
+    color_table = "#00FF00"
+# Fungsi untuk menampilkan teks berwarna
+# ------------------[ LOGO-FANKY-GANTENG ]-----------------#
+def logofan():
+    Console().print(
+        Panel(
+            """
+[bold red]███████████████████████ [bold yellow]NOTE  : [bold green]RECODE BY FANKY  
+[bold red]███████████████████████ [bold yellow]Githb : [bold green]github.com/fanky86  
+[bold red]███████████████████████ [bold yellow]Serah : [bold green]BTW GW GANTENG
+[bold white]███████████████████████          
+[bold white]███████████████████████          
+[bold white]███████████████████████ 
+[bold white]""",
+            width=60,
+            style=f"{color_panel}",
+        )
+    )
+    
 # Daftar modul yang diperlukan
 required_modules = [
     "requests",
     "colorama",
     "rich",
-    "beautifulsoup4"
+    "bs4"
 ]
 
 def install(package):
@@ -60,7 +102,7 @@ def load_user_agents():
 def command():
     try:
         # Panel for user input
-        console.print(Panel("[bold green]Serangan STELLAR Dimulai![/bold green]"))
+        logofan()
         
         target = console.input(f'{H2}• {K2}Masukkan URL Target: {H2}')
         thread = int(console.input(f'{H2}• {K2}Jumlah Thread: {H2}'))
@@ -157,6 +199,6 @@ def countdown(t):
 if __name__ == '__main__':
     init(convert=True)  # Menggunakan colorama untuk konversi warna di terminal
     clear()
-    console.print(Panel("[bold cyan]Selamat Datang di STELLAR Attack Script[/bold cyan]", style="bold cyan"))
+    #console.print(Panel("[bold cyan]Selamat Datang di STELLAR Attack Script[/bold cyan]", style="bold cyan"))
     while True:
         command()
