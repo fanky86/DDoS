@@ -1,4 +1,4 @@
-import os,rich
+import os,rich,random
 from rich.console import Console
 from rich.panel import Panel
 # ------------------[  indication ]-------------------#
