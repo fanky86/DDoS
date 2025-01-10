@@ -1,12 +1,48 @@
-import os
-
+import os,rich
+from rich.console import Console
+from rich.panel import Panel
+# ------------[ INDICATION ]---------------#
+M2 = "[#FF0000]"  # MERAH
+H2 = "[#00FF00]"  # HIJAU
+K2 = "[#FFFF00]"  # KUNING
+B2 = "[#00C8FF]"  # BIRU
+P2 = "[#FFFFFF]"  # PUTIH
+U2 = "[#AF00FF]"  # UNGU
+O2 = "[#FF8F00]"  # ORANGE
+try:
+    file_color = open("data/theme_color", "r").read()
+    color_text = file_color.split("|")[0]
+    color_panel = file_color.split("|")[1]
+except:
+    color_text = "[#00FF00]"
+    W1 = random.choice([M2, H2, K2])
+    W2 = random.choice([K2, M2, K2])
+    W3 = random.choice([H2, K2, M2])
+    color_panel = "#00FF00"
+    color_ok = "#00FF00"
+    color_cp = "#FFFF00"
+try:
+    color_table = open("data/theme_color", "r").read()
+except FileNotFoundError:
+    color_table = "#00FF00"
 # Fungsi untuk menampilkan teks berwarna
+# ------------------[ LOGO-FANKY-GANTENG ]-----------------#
 def print_banner():
-    print("""
-\x1b[38;2;255;20;147m╦╔═ ╔═╗ ╦═╗ ╔╦╗ ╔═╗
-\x1b[38;2;255;20;147m╠╩╗ ╠═╣ ╠╦╝ ║║║ ╠═╣
-\x1b[38;2;255;20;147m╩ ╩ ╩ ╩ ╩╚═ ╩ ╩ ╩ ╩\x1b[38;2;0;255;58m>(setup)
-""")
+    Console().print(
+        Panel(
+            """
+[bold red]███████████████████████ [bold yellow]NOTE  : [bold green]RECODE BY FANKY  
+[bold red]███████████████████████ [bold yellow]Githb : [bold green]github.com/fanky86  
+[bold red]███████████████████████ [bold yellow]Serah : [bold green]BTW GW GANTENG
+[bold white]███████████████████████          
+[bold white]███████████████████████          
+[bold white]███████████████████████ 
+[bold white]""",
+            width=60,
+            style=f"{color_panel}",
+        )
+    )
+    
 
 # Fungsi untuk menginstal paket-paket dengan pip atau pip3
 def install_packages(pip_command):
