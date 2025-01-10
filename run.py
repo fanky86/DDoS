@@ -42,7 +42,7 @@ except FileNotFoundError:
 def logofan():
     Console().print(
         Panel(
-            """
+            f"""
 [bold red]███████████████████████ [bold yellow]NOTE  : [bold green]RECODE BY FANKY  
 [bold red]███████████████████████ [bold yellow]Githb : [bold green]github.com/fanky86  
 [bold red]███████████████████████ [bold yellow]Serah : [bold green]BTW GW GANTENG
@@ -102,7 +102,7 @@ def load_user_agents():
 def command():
     try:
         # Panel for user input
-        logofan()
+        
         
         target = console.input(f'{H2}• {K2}Masukkan URL Target: {H2}')
         thread = int(console.input(f'{H2}• {K2}Jumlah Thread: {H2}'))
@@ -199,6 +199,6 @@ def countdown(t):
 if __name__ == '__main__':
     init(convert=True)  # Menggunakan colorama untuk konversi warna di terminal
     clear()
-    #console.print(Panel("[bold cyan]Selamat Datang di STELLAR Attack Script[/bold cyan]", style="bold cyan"))
+    logofan()
     while True:
         command()
