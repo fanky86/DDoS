@@ -32,7 +32,7 @@ def title():
     Console().print(
         Panel(
             """
-[bold red]███████████████████████ [bold yellow]NOTE  : [bold green]SCRIPT BY FANKY  
+[bold red]███████████████████████ [bold yellow]NOTE  : [bold green]RECODE BY FANKY  
 [bold red]███████████████████████ [bold yellow]Githb : [bold green]github.com/fanky86  
 [bold red]███████████████████████ [bold yellow]Serah : [bold green]BTW GW GANTENG
 [bold white]███████████████████████          
