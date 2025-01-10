@@ -61,12 +61,12 @@ def install_packages(pip_command):
 # Script utama
 print_banner()
 
-print("""[0] pip\n[1] pip3\nPilih yang mana yang kamu gunakan?""")
-c = input(">>>: ").strip()
+Console().print(Panel("{H2}1. {P2}pip\n{H2}2. {P2}pip3",width=60,style=f"{color_panel}"))
+c = Console().input("{H2}• {P2}: ").strip()
 
-if c == "0":
+if c == "1":
     pip_command = "pip"
-elif c == "1":
+elif c == "2":
     pip_command = "pip3"
 else:
     print("Pilihan tidak valid.")
